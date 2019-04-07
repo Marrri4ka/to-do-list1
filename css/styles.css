@@ -1,9 +1,17 @@
 h1{
   text-align: center;
 }
- #done_button {
-height: 25px;
- }
+
  .bg-primary{
    height: 40px;
+ }
+
+ .li-not-done {
+ border: 2px solid blue;
+ border-radius: 50px;
+ }
+
+ .li-done {
+ border: 2px solid green;
+ border-radius: 50px;
  }
