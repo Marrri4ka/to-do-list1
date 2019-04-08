@@ -17,22 +17,30 @@ ToDoList.prototype.assignId = function() {
   return this.currentId;
 }
 ToDoItem.prototype.showData = function(result) {
-  result.append("<li id='li-item" + this.id + "'>" + this.todo + "</li>" +
-    "<button class='btn-sm btn-danger' id = 'button-done" +
+  var li = $("<li>");
+  li.attr('id', 'li-item' + this.id);
+  li.text(this.todo);
+  result.append(li);
+
+  // result.append("<li id='li-item" + this.id + "'>" + this.todo + "</li>");
+  result.append("<button class='btn-sm btn-danger' id = 'button-done" +
     this.id + "'>Done</button>" + " " +
     "<button class='btn-sm btn-primary' id = 'button-remove" + this.id + "'>" +
     "Remove item</button>");
-  $("#button-done" + this.id).click(function() {
 
-    $("#button-done" + this.id).addClass('li-done');
-    console.log($("#li-item" + this.id).text());
+  $("#button-done" + this.id).click(function() {
+    li.css('background-color', 'green');
+  });
+
+  $("#button-remove" + this.id).click(function() {
+    li.hide();
+
+
+
 
   });
+
 };
-
-ToDoItem.prototype.deleteItem = function() {
-
-}
 // UI
 var itemsList = new ToDoList();
 
@@ -49,10 +57,14 @@ $(document).ready(function() {
     $(".remove-button").click(function() {
       ToDoItem.deleteItem(this.todo);
       $("li").hide();
+      $("#button-done" + this.id).hide();
+
     });
   });
 
 });
+
+
 
 
 // function ToDoItem(thing) {
