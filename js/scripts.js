@@ -1,45 +1,66 @@
-function ToDoList(thing) {
+function ToDoItem(thing) {
   this.todo = thing;
+  this.id = 0;
 }
 
+function ToDoList() {
+  this.items = [];
+  this.currentId = 0;
+}
+ToDoList.prototype.addItem = function(item) {
+  item.id = this.assignId();
+  this.items.push(item);
+}
 
-ToDoList.prototype.showData = function(result, number) {
-  result.append("<li class='li-not-done' id='li-item'>" + this.todo + "</li>" +
-    "<button class='done-button btn btn-danger' id = 'button'" + number + ">Done</button>");
+ToDoList.prototype.assignId = function() {
+  this.currentId += 1;
+  return this.currentId;
+}
+ToDoItem.prototype.showData = function(result) {
+  result.append("<li id='li-item" + this.id + "'>" + this.todo + "</li>" +
+    "<button class='btn-sm btn-danger' id = 'button-done" +
+    this.id + "'>Done</button>" + " " +
+    "<button class='btn-sm btn-primary' id = 'button-remove" + this.id + "'>" +
+    "Remove item</button>");
+  $("#button-done" + this.id).click(function() {
 
+    $("#button-done" + this.id).addClass('li-done');
+    console.log($("#li-item" + this.id).text());
+
+  });
 };
 
+ToDoItem.prototype.deleteItem = function() {
 
-
-// ToDoList.prototype.click = function (button, result){
-//   $(".btn").click (function(){
-//     this.todo.
-//   });
-// }
+}
+// UI
+var itemsList = new ToDoList();
 
 $(document).ready(function() {
   $("form#new-list").submit(function(event) {
     event.preventDefault();
-    var inputSentence = $("input#new-thing").val();
-    var sentence = new ToDoList(inputSentence);
+    var inputData = $("input#new-thing").val();
+    var item = new ToDoItem(inputData);
+    itemsList.addItem(item);
     var result = $("ul");
-    sentence.showData(result);
-    $(".done-button").click(function() {
-      $("#li-item").addClass('li-done').removeClass('li-not-done');
+    item.showData(result);
+
+
+    $(".remove-button").click(function() {
+      ToDoItem.deleteItem(this.todo);
+      $("li").hide();
     });
-
-
   });
 
 });
 
 
-// function ToDoList(thing) {
+// function ToDoItem(thing) {
 //   this.todo = thing;
 // }
 //
 //
-// ToDoList.prototype.showData = function(result) {
+// ToDoItem.prototype.showData = function(result) {
 //   result.append("<li>" + this.todo + "</li>");
 //
 //
@@ -51,7 +72,7 @@ $(document).ready(function() {
 //   $("form#new-list").submit(function(event) {
 //     event.preventDefault();
 //     var inputThing = $("input#new-thing").val();
-//     var sentence = new ToDoList(inputThing);
+//     var sentence = new ToDoItem(inputThing);
 //     var result = $("ul");
 //     sentence.showData(result);
 //   });
