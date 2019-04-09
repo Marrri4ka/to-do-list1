@@ -67,7 +67,7 @@ function displayContactDetails(addressBookToDisplay) {
   var contactsList = $("ul#contacts");
   var htmlForContactInfo = "";
   addressBookToDisplay.contacts.forEach(function(contact) {
-    htmlForContactInfo += "<li id=" + contact.id + ">" + contact.firstName + " " + contact.lastName + "</li>";
+    htmlForContactInfo += "<li id='myli" + contact.id + "'>" + contact.firstName + " " + contact.lastName + "<button class='deleteButton' id=" + contact.id + ">Delete</button>" + "</li>";
   });
   contactsList.html(htmlForContactInfo);
 };
@@ -87,7 +87,8 @@ function showContact(contactId) {
 
 function attachContactListeners() {
   $("ul#contacts").on("click", "li", function() {
-    showContact(this.id);
+    $("li#" + this.id).hide();
+    console.log(this.id);
   });
   $("#buttons").on("click", ".deleteButton", function() {
     addressBook.deleteContact(this.id);
@@ -112,6 +113,8 @@ $(document).ready(function() {
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
+
+
 
     var newContact = new Contact(inputtedFirstName, inputtedLastName);
     addressBook.addContact(newContact);
